@@ -17,16 +17,22 @@ router.get('/new', (req, res) => {
 
 router.post('/update', (req, res) => {
   const section = new Section(req.body);
-  const insertArray = [];
+  const seats = Array(req.body.quantity * 1).fill(0).map((_, i) => {
+    const seatNumber = i + 1;
+    const purchased = false;
+    return { seatNumber, purchased };
+  });
+  section.seats = seats;
   section.save(() => {
-    const query = { _id: section.id };
-    for (let i = 0; i < section.quantity; i++) {
-      insertArray.push({ seatNumber: i + 1, purchased: false });
+    /* const query = { _id: section.id };
+      for (let i = 0; i < section.quantity; i++) {
+      seats.push({ seatNumber: i + 1, purchased: false });
     }
-    Section.findOneAndUpdate(query,
-                             { $pushAll: { seats: insertArray } },
+     Section.findOneAndUpdate(query,
+                             { $pushAll: { seats } },
                              () => { res.send(section); }
-                            );
+                            );*/
+    res.send(section);
   });
 });
 
