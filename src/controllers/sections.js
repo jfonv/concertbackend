@@ -24,14 +24,6 @@ router.post('/update', (req, res) => {
   });
   section.seats = seats;
   section.save(() => {
-    /* const query = { _id: section.id };
-      for (let i = 0; i < section.quantity; i++) {
-      seats.push({ seatNumber: i + 1, purchased: false });
-    }
-     Section.findOneAndUpdate(query,
-                             { $pushAll: { seats } },
-                             () => { res.send(section); }
-                            );*/
     res.send(section);
   });
 });
