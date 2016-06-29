@@ -30,14 +30,12 @@ router.post('/update', (req, res) => {
   });
 });
 
-
+// for whatever reason, the key from the front end was NOT getting populated in the backend.
 router.post('/purchase_seat', (req, res) => {
-  const query = { 'seats._id': req.ObjectId };
-  console.log('sadfasd: ', req);
-  Section.findByIdAndUpdate(req.ObjectId,
+  const query = { 'seats._id': req.body.ObjectId };
+  Section.update(query,
                  { $set: { 'seats.$.purchased': true } },
                  (err, doc) => {
-
                    res.send(doc);
                  });
 });
